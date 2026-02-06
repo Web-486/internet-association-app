@@ -3,7 +3,7 @@
  * 封装所有后端接口调用
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 /**
  * API 请求封装
@@ -45,7 +45,7 @@ class ApiClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -97,11 +97,11 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify({ account, password }),
     });
-    
+
     if (result.success && result.data) {
       this.setToken(result.data.access_token);
     }
-    
+
     return result;
   }
 
@@ -135,7 +135,7 @@ class ApiClient {
     if (params.page_size) query.set('page_size', String(params.page_size));
     if (params.topic_id) query.set('topic_id', params.topic_id);
     if (params.user_id) query.set('user_id', params.user_id);
-    
+
     return this.request<ApiResponse<PostList>>(`/posts?${query}`);
   }
 
@@ -213,7 +213,7 @@ class ApiClient {
     if (params.page_size) query.set('page_size', String(params.page_size));
     if (params.category) query.set('category', params.category);
     if (params.status) query.set('status', params.status);
-    
+
     return this.request<ApiResponse<EventList>>(`/events?${query}`);
   }
 
@@ -238,7 +238,7 @@ class ApiClient {
     if (params.page) query.set('page', String(params.page));
     if (params.page_size) query.set('page_size', String(params.page_size));
     if (params.type) query.set('type', params.type);
-    
+
     return this.request<ApiResponse<NotificationList>>(`/notifications?${query}`);
   }
 
